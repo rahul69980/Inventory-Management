@@ -1,0 +1,555 @@
+<footer class="enhanced-footer mt-auto py-5" style="
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(30px);
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+">
+  <!-- Animated Background Elements -->
+  <div class="footer-bg-animation">
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <!-- Brand Section -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="footer-brand">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="brand-icon">
+              <i class="fas fa-cube" style="font-size: 2rem; color: #00D4FF;"></i>
+            </div>
+            <div>
+              <h4 class="text-white mb-0" style="font-weight: 700;">Smart Inventory</h4>
+              <p class="text-white mb-0" style="opacity: 0.8; font-size: 0.9rem;">Control System</p>
+            </div>
+          </div>
+          <p class="text-white mb-3" style="opacity: 0.9; line-height: 1.6;">
+            🚀 Revolutionary inventory management with AI-powered insights, real-time tracking, and automated workflows.
+          </p>
+          
+          <!-- Social Media Links -->
+          <div class="social-links d-flex gap-3">
+            <a href="#" class="social-link" title="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link" title="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" title="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-link" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="social-link" title="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Links Section -->
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="footer-title text-white font-weight-700 mb-4">Quick Links</h6>
+        <ul class="footer-links">
+          <li><a href="/home" class="footer-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="/inventory-list" class="footer-link"><i class="fas fa-boxes"></i> Inventory</a></li>
+          <li><a href="/add-item" class="footer-link"><i class="fas fa-plus"></i> Add Items</a></li>
+          <li><a href="/transaction-log" class="footer-link"><i class="fas fa-history"></i> Transactions</a></li>
+          <li><a href="/alerts" class="footer-link"><i class="fas fa-bell"></i> Alerts</a></li>
+        </ul>
+      </div>
+
+      <!-- Features Section -->
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="footer-title text-white font-weight-700 mb-4">Features</h6>
+        <ul class="footer-links">
+          <li><a href="/low-stock" class="footer-link"><i class="fas fa-exclamation-triangle"></i> Low Stock</a></li>
+          <li><a href="/hazardous-materials" class="footer-link"><i class="fas fa-radiation"></i> Hazardous</a></li>
+          <li><a href="/reserved-items" class="footer-link"><i class="fas fa-lock"></i> Reserved</a></li>
+          <li><a href="/items-available" class="footer-link"><i class="fas fa-check-circle"></i> Available</a></li>
+        </ul>
+      </div>
+      
+      <!-- System Status & Info -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <h6 class="footer-title text-white font-weight-700 mb-4">System Status</h6>
+        
+        <!-- Live Status Indicators -->
+        <div class="status-indicators mb-4">
+          <div class="status-item d-flex align-items-center gap-3 mb-2">
+            <div class="status-indicator online">
+              <div class="pulse-ring"></div>
+              <div class="pulse-dot"></div>
+            </div>
+            <div>
+              <span class="text-white" style="font-weight: 500;">Database Status</span>
+              <div class="text-white" style="font-size: 0.8rem; opacity: 0.8;" id="db-status">🟢 Connected & Active</div>
+            </div>
+          </div>
+          
+          <div class="status-item d-flex align-items-center gap-3 mb-2">
+            <div class="status-indicator online" style="animation-delay: 0.5s;">
+              <div class="pulse-ring"></div>
+              <div class="pulse-dot"></div>
+            </div>
+            <div>
+              <span class="text-white" style="font-weight: 500;">Real-time Updates</span>
+              <div class="text-white" style="font-size: 0.8rem; opacity: 0.8;" id="socket-status">🟢 Live Connection</div>
+            </div>
+          </div>
+
+          <div class="status-item d-flex align-items-center gap-3 mb-3">
+            <div class="status-indicator online" style="animation-delay: 1s;">
+              <div class="pulse-ring"></div>
+              <div class="pulse-dot"></div>
+            </div>
+            <div>
+              <span class="text-white" style="font-weight: 500;">Server Response</span>
+              <div class="text-white" style="font-size: 0.8rem; opacity: 0.8;">🟢 < 50ms</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="fas fa-envelope" style="color: #00D4FF;"></i>
+            <span class="text-white" style="font-size: 0.9rem;">support@smartinventory.com</span>
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="fas fa-phone" style="color: #00FF88;"></i>
+            <span class="text-white" style="font-size: 0.9rem;">+91 98765 43210</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <i class="fas fa-clock" style="color: #FFD700;"></i>
+            <span class="text-white" style="font-size: 0.85rem; opacity: 0.8;">Last sync: <span id="last-updated">--</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <hr class="footer-divider">
+    
+    <!-- Bottom Footer -->
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <div class="d-flex align-items-center gap-4 flex-wrap">
+          <p class="text-white mb-0" style="font-size: 0.9rem; opacity: 0.8;">
+            © 2025 Smart Inventory Control System. All rights reserved.
+          </p>
+          <div class="footer-badges d-flex gap-2">
+            <span class="tech-badge">Node.js</span>
+            <span class="tech-badge">MongoDB</span>
+            <span class="tech-badge">Socket.IO</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="d-flex align-items-center justify-content-md-end justify-content-start gap-3 mt-3 mt-md-0">
+          <div class="version-info d-flex align-items-center gap-2">
+            <i class="fas fa-code-branch" style="color: #FF6B35;"></i>
+            <span class="version-badge">v1.2.0</span>
+          </div>
+          <button class="scroll-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
+            <i class="fas fa-arrow-up"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* Enhanced Footer Styles */
+.enhanced-footer {
+  position: relative;
+  z-index: 100;
+}
+
+/* Floating Background Animation */
+.footer-bg-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.floating-element {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(255, 107, 53, 0.1));
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-element:nth-child(1) {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 8s;
+}
+
+.floating-element:nth-child(2) {
+  top: 60%;
+  right: 20%;
+  animation-delay: 2s;
+  animation-duration: 10s;
+}
+
+.floating-element:nth-child(3) {
+  bottom: 20%;
+  left: 70%;
+  animation-delay: 4s;
+  animation-duration: 7s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-15px) translateX(8px) rotate(2deg);
+  }
+}
+
+/* Footer Title Styles */
+.footer-title {
+  font-size: 1.1rem;
+  background: linear-gradient(45deg, #00D4FF, #00FF88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, #FF6B35, #FFD700);
+  border-radius: 2px;
+}
+
+/* Footer Links Styles */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+}
+
+.footer-link:hover {
+  color: #00D4FF;
+  transform: translateX(5px);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+.footer-link i {
+  width: 16px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover i {
+  transform: scale(1.2);
+  color: #00FF88;
+}
+
+/* Social Links Styles */
+.social-links {
+  margin-top: 1rem;
+}
+
+.social-link {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.social-link:hover::before {
+  left: 100%;
+}
+
+.social-link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.social-link:nth-child(1):hover { background: linear-gradient(135deg, #4267B2, #365899); }
+.social-link:nth-child(2):hover { background: linear-gradient(135deg, #1DA1F2, #0d8bd9); }
+.social-link:nth-child(3):hover { background: linear-gradient(135deg, #0077B5, #005885); }
+.social-link:nth-child(4):hover { background: linear-gradient(135deg, #333, #24292e); }
+.social-link:nth-child(5):hover { background: linear-gradient(135deg, #E4405F, #C13584); }
+
+/* Status Indicators */
+.status-indicator {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00FF88;
+  border-radius: 50%;
+  animation: pulsering 2s ease-out infinite;
+}
+
+.pulse-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #00FF88;
+  border-radius: 50%;
+  animation: pulsedot 2s ease-out infinite;
+}
+
+@keyframes pulsering {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  80%, 100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pulsedot {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Tech Badges */
+.tech-badge {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 255, 136, 0.2));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(0, 255, 136, 0.3));
+  border-color: rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+}
+
+/* Version Badge */
+.version-badge {
+  background: linear-gradient(135deg, #FF6B35, #FFD700);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.version-badge:hover {
+  background: linear-gradient(135deg, #FFD700, #FF6B35);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+/* Scroll to Top Button */
+.scroll-to-top-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8A2BE2, #FF1493);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}
+
+.scroll-to-top-btn:hover {
+  background: linear-gradient(135deg, #FF1493, #8A2BE2);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.scroll-to-top-btn:active {
+  transform: translateY(0) scale(1);
+}
+
+/* Footer Divider */
+.footer-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  margin: 3rem 0 2rem 0;
+}
+
+/* Contact Info Hover Effects */
+.contact-info div:hover {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin: -0.5rem;
+  transition: all 0.3s ease;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .enhanced-footer {
+    padding: 2rem 0;
+  }
+  
+  .footer-brand h4 {
+    font-size: 1.3rem;
+  }
+  
+  .social-links {
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .footer-links {
+    text-align: center;
+  }
+  
+  .status-indicators {
+    justify-content: center;
+  }
+  
+  .contact-info {
+    text-align: center;
+  }
+  
+  .footer-badges {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .version-info {
+    justify-content: center;
+  }
+}
+
+/* Loading Animation for Status */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Hover Animation for Footer Sections */
+.enhanced-footer .row > div {
+  transition: transform 0.3s ease;
+}
+
+.enhanced-footer .row > div:hover {
+  transform: translateY(-5px);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Update last updated time
+  function updateLastUpdated() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    document.getElementById('last-updated').textContent = timeString;
+  }
+  
+  // Update socket status based on connection
+  if (typeof app !== 'undefined' && app.socket) {
+    const socketStatus = document.getElementById('socket-status');
+    
+    app.socket.on('connect', () => {
+      socketStatus.textContent = 'Connected';
+      socketStatus.style.color = '#4facfe';
+    });
+    
+    app.socket.on('disconnect', () => {
+      socketStatus.textContent = 'Disconnected';
+      socketStatus.style.color = '#fa709a';
+    });
+  }
+  
+  // Update last updated time initially and every minute
+  updateLastUpdated();
+  setInterval(updateLastUpdated, 60000);
+});
+</script>

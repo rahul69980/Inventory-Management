@@ -1,0 +1,43 @@
+{
+  "name": "inventory-management-system",
+  "version": "1.0.0",
+  "description": "Professional Inventory Management System built with Node.js, Express, MongoDB, and real-time Socket.IO integration.",
+  "main": "server.js",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_ENV=development nodemon server.js",
+    "production": "NODE_ENV=production PM2_HOME=.pm2 pm2 start ecosystem.config.js --env production",
+    "stop": "pm2 stop ecosystem.config.js",
+    "restart": "pm2 restart ecosystem.config.js",
+    "reload": "pm2 reload ecosystem.config.js",
+    "delete": "pm2 delete ecosystem.config.js",
+    "seed": "node scripts/seedData.js",
+    "seed:prod": "NODE_ENV=production node scripts/seedData.js",
+    "logs": "pm2 logs",
+    "monitor": "pm2 monit",
+    "install:global": "npm install -g pm2 nodemon",
+    "setup:linux": "chmod +x deploy.sh && ./deploy.sh",
+    "test": "echo 'Tests not implemented yet' && exit 0",
+    "lint": "echo 'Linting not configured yet' && exit 0",
+    "build": "echo 'No build step required for this project' && exit 0"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.0",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

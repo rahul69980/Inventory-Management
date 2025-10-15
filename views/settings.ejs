@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Smart Inventory Control</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .settings-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .settings-header {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .settings-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .settings-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .settings-sections {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .settings-section {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .switch.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .switch-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .switch.active .switch-slider {
+            transform: translateX(30px);
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-name {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .setting-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .save-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem auto 0;
+        }
+
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .danger-zone {
+            border: 2px solid #EF4444;
+        }
+
+        .danger-button {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .danger-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .settings-header {
+                padding: 2rem;
+            }
+            .settings-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    
+    <div class="settings-container">
+        <%- include('partials/back-button') %>
+        
+        <div class="settings-header">
+            <h1 class="settings-title">
+                <i class="fas fa-cog"></i> Settings
+            </h1>
+            <p class="settings-subtitle">Manage your account preferences and application settings</p>
+        </div>
+
+        <div class="settings-sections">
+            <!-- Profile Settings -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Profile Information
+                </h2>
+                <form id="profile-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" value="<%= user.firstName %>" name="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" value="<%= user.lastName || '' %>" name="lastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" value="<%= user.email %>" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" value="<%= user.username %>" name="username" readonly>
+                        <small style="color: rgba(255, 255, 255, 0.6); font-size: 0.8rem;">Username cannot be changed</small>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Security & Password
+                </h2>
+                <form id="password-form">
+                    <div class="form-group">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" class="form-input" placeholder="Enter current password" name="currentPassword">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-input" placeholder="Enter new password" name="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-input" placeholder="Confirm new password" name="confirmPassword">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                </h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Email Notifications</div>
+                        <div class="setting-desc">Receive email alerts for low stock and important updates</div>
+                    </div>
+                    <div class="switch active" onclick="toggleSwitch(this)">
+                        <div class="switch-slider"></div>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Browser Notifications</div>
+                        <div class="setting-desc">Show browser notifications for real-time alerts</div>
+                    </div>
+                    <div class="switch" onclick="toggleSwitch(this)">
+                        <div class="switch-slider"></div>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Low Stock Alerts</div>
+                        <div class="setting-desc">Get notified when items are running low</div>
+                    </div>
+                    <div class="switch active" onclick="toggleSwitch(this)">
+                        <div class="switch-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Settings -->
+            <div class="settings-section">
+                <h2 class="section-title">
+                    <i class="fas fa-sliders-h"></i>
+                    Application Preferences
+                </h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Dark Mode</div>
+                        <div class="setting-desc">Use dark theme for better visibility</div>
+                    </div>
+                    <div class="switch" onclick="toggleSwitch(this)">
+                        <div class="switch-slider"></div>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Auto-refresh Dashboard</div>
+                        <div class="setting-desc">Automatically refresh dashboard data</div>
+                    </div>
+                    <div class="switch active" onclick="toggleSwitch(this)">
+                        <div class="switch-slider"></div>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Show Animations</div>
+                        <div class="setting-desc">Enable smooth animations throughout the app</div>
+                    </div>
+                    <div class="switch active" onclick="toggleSwitch(this)">
+                        <div class="switch-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="settings-section danger-zone">
+                <h2 class="section-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Danger Zone
+                </h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-name">Delete Account</div>
+                        <div class="setting-desc">Permanently delete your account and all associated data</div>
+                    </div>
+                    <button class="danger-button" onclick="confirmDeleteAccount()">
+                        <i class="fas fa-trash"></i>
+                        Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button class="save-button" onclick="saveSettings()">
+            <i class="fas fa-save"></i>
+            Save Changes
+        </button>
+    </div>
+
+    <%- include('partials/footer') %>
+    
+    <script>
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+
+        function saveSettings() {
+            // Show success message
+            alert('Settings saved successfully!');
+        }
+
+        function confirmDeleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                if (confirm('This will permanently delete all your data. Are you absolutely sure?')) {
+                    alert('Account deletion is not implemented in this demo.');
+                }
+            }
+        }
+
+        // Add form validation
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newPassword = this.newPassword.value;
+            const confirmPassword = this.confirmPassword.value;
+            
+            if (newPassword !== confirmPassword) {
+                alert('New password and confirm password do not match!');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
+            
+            alert('Password updated successfully!');
+        });
+    </script>
+</body>
+</html>

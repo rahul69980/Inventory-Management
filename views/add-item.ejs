@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Inventory Item</title>
+  <link href="http://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 15px;
+      animation: bg-animation 8s ease-in-out infinite alternate;
+      color: white;
+    }
+
+    @keyframes bg-animation {
+      0% { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+      100% { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    input, select {
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.8);
+    }
+
+    option {
+      color: #000;
+    }
+
+    button {
+      background: linear-gradient(135deg, #43e97b, #38f9d7);
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #38f9d7, #43e97b);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: #38f9d7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <%- include('partials/back-button') %>
+
+    <h1>Add New Inventory Item</h1>
+    <form id="addItemForm">
+      <label for="sku">SKU / Item Code</label>
+      <input type="text" id="sku" name="sku" required placeholder="Unique item code" />
+
+      <label for="name">Item Name</label>
+      <input type="text" id="name" name="name" required placeholder="Item name" />
+
+      <label for="type">Item Type</label>
+      <select id="type" name="type" required>
+        <option value="" disabled selected>Select type</option>
+        <option value="Raw Material">Raw Material</option>
+        <option value="Finished Product">Finished Product</option>
+      </select>
+
+      <label for="unit">Unit of Measure</label>
+      <input type="text" id="unit" name="unit" placeholder="e.g., kg, liter, piece" required />
+
+      <label for="minThreshold">Minimum Threshold</label>
+      <input type="number" id="minThreshold" name="minThreshold" min="0" value="0" />
+
+      <label for="qtyOnHand">Quantity On Hand</label>
+      <input type="number" id="qtyOnHand" name="qtyOnHand" min="0" value="0" />
+
+      <label for="qtyReserved">Quantity Reserved</label>
+      <input type="number" id="qtyReserved" name="qtyReserved" min="0" value="0" />
+
+      <label for="qtyOrdered">Quantity Ordered</label>
+      <input type="number" id="qtyOrdered" name="qtyOrdered" min="0" value="0" />
+
+      <button type="submit">Add Item</button>
+    </form>
+
+    <a class="back-link" href="/inventory-list">Back to Inventory List</a>
+  </div>
+
+  <script>
+    const form = document.getElementById('addItemForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const item = {
+        sku: form.sku.value.trim(),
+        name: form.name.value.trim(),
+        type: form.type.value,
+        unit: form.unit.value.trim(),
+        minThreshold: parseInt(form.minThreshold.value) || 0,
+        qtyOnHand: parseInt(form.qtyOnHand.value) || 0,
+        qtyReserved: parseInt(form.qtyReserved.value) || 0,
+        qtyOrdered: parseInt(form.qtyOrdered.value) || 0,
+      };
+
+      let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+      if (inventory.some(i => i.sku === item.sku)) {
+        alert('SKU already exists. Please use a unique SKU.');
+        return;
+      }
+
+      inventory.push(item);
+      localStorage.setItem('inventory', JSON.stringify(inventory));
+      alert('Item added successfully!');
+      form.reset();
+    });
+  </script>
+</body>
+</html>

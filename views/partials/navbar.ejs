@@ -1,0 +1,123 @@
+<nav class="navbar d-flex justify-content-between align-items-center">
+  <a href="/home" class="nav-brand">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M4 7L12 11M4 7V17L12 21M12 11V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Smart Inventory
+  </a>
+  
+  <div class="nav-links">
+    <% if (isAuthenticated) { %>
+      <a href="/home" class="nav-link">Dashboard</a>
+      <a href="/inventory-list" class="nav-link">Inventory</a>
+      <a href="/alerts" class="nav-link">
+        Alerts
+        <span id="alert-badge" class="badge badge-danger" style="display: none; margin-left: 0.5rem;">0</span>
+      </a>
+      <div class="dropdown" style="position: relative; display: inline-block;">
+        <button class="nav-link dropdown-toggle" style="background: none; border: none; cursor: pointer;">
+          <%= user ? user.firstName : 'User' %>
+        </button>
+        <div class="dropdown-menu" style="
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(15px);
+          border-radius: var(--border-radius-sm);
+          padding: 0.5rem 0;
+          min-width: 150px;
+          box-shadow: var(--shadow-lg);
+          display: none;
+          z-index: 1000;
+        ">
+          <a href="/profile" class="dropdown-item" style="
+            display: block;
+            padding: 0.5rem 1rem;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+          ">Profile</a>
+          <a href="/settings" class="dropdown-item" style="
+            display: block;
+            padding: 0.5rem 1rem;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+          ">Settings</a>
+          <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.2); margin: 0.5rem 0;">
+          <a href="/logout" class="dropdown-item" style="
+            display: block;
+            padding: 0.5rem 1rem;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+          ">Logout</a>
+        </div>
+      </div>
+    <% } else { %>
+      <a href="/login" class="nav-link">Login</a>
+      <a href="/signup" class="nav-link">Sign Up</a>
+    <% } %>
+  </div>
+</nav>
+
+<style>
+.dropdown:hover .dropdown-menu {
+  display: block !important;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+</style>
+
+<script>
+// Update alert badge count
+async function updateAlertBadge() {
+  try {
+    const response = await app.getAlerts({ resolved: false });
+    const alertCount = response.data.length;
+    const badge = document.getElementById('alert-badge');
+    
+    if (alertCount > 0) {
+      badge.textContent = alertCount;
+      badge.style.display = 'inline-block';
+      if (alertCount > 5) {
+        badge.classList.remove('badge-danger');
+        badge.classList.add('badge-warning');
+      }
+    } else {
+      badge.style.display = 'none';
+    }
+  } catch (error) {
+    console.error('Failed to update alert badge:', error);
+  }
+}
+
+// Update alert badge on page load
+document.addEventListener('DOMContentLoaded', updateAlertBadge);
+
+// Update alert badge every 30 seconds
+setInterval(updateAlertBadge, 30000);
+</script>

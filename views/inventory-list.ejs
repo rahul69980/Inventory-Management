@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventory List</title>
+  <link href="http://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9faff;
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h1 {
+      color: #4a90e2;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.6rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #4a90e2;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #eef6ff;
+    }
+    .actions button {
+      margin-right: 0.5rem;
+      padding: 0.3rem 0.7rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: white;
+    }
+    .edit-btn {
+      background-color: #4a90e2;
+    }
+    .delete-btn {
+      background-color: #e74c3c;
+    }
+    .edit-btn:hover {
+      background-color: #357ab8;
+    }
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+    a {
+      display: inline-block;
+      margin: 1rem 0;
+      color: #4a90e2;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/back-button') %>
+  <h1>Inventory List</h1>
+  <a href="/add-item">+ Add New Item</a>
+  <table>
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Item Name</th>
+        <th>Type</th>
+        <th>Unit</th>
+        <th>Min Threshold</th>
+        <th>Qty On Hand</th>
+        <th>Qty Reserved</th>
+        <th>Qty Ordered</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="inventoryTableBody">
+      <!-- Inventory rows inserted by JS -->
+    </tbody>
+  </table>
+  <a href="/transaction-log">View Transaction Log</a>
+  <script>
+    const tbody = document.getElementById('inventoryTableBody');
+
+    function loadInventory() {
+      const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+      tbody.innerHTML = '';
+
+      if (inventory.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No inventory items found.</td></tr>';
+        return;
+      }
+
+      inventory.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.sku}</td>
+          <td>${item.name}</td>
+          <td>${item.type}</td>
+          <td>${item.unit}</td>
+          <td>${item.minThreshold}</td>
+          <td>${item.qtyOnHand}</td>
+          <td>${item.qtyReserved}</td>
+          <td>${item.qtyOrdered}</td>
+          <td class="actions">
+            <button class="edit-btn" data-sku="${item.sku}">Edit</button>
+            <button class="delete-btn" data-sku="${item.sku}">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Delete item
+    tbody.addEventListener('click', (e) => {
+      if (e.target.classList.contains('delete-btn')) {
+        const sku = e.target.dataset.sku;
+        if (confirm(`Are you sure you want to delete item with SKU "${sku}"?`)) {
+          let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+          inventory = inventory.filter(item => item.sku !== sku);
+          localStorage.setItem('inventory', JSON.stringify(inventory));
+
+          // Add to transaction log
+          const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+          const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+          transactions.push(`[${timestamp}] Deleted item ${sku}`);
+          localStorage.setItem('transactions', JSON.stringify(transactions));
+
+          loadInventory();
+        }
+      }
+    });
+
+    // Edit item - redirect to edit page with SKU param
+    tbody.addEventListener('click', (e) => {
+      if (e.target.classList.contains('edit-btn')) {
+        const sku = e.target.dataset.sku;
+        window.location.href = `edit-item.html?sku=${encodeURIComponent(sku)}`;
+      }
+    });
+
+    loadInventory();
+  </script>
+</body>
+</html>

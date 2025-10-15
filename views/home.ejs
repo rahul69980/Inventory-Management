@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventory Control System - Home</title>
+  <link href="http://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 1s ease forwards;
+    }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+    nav {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+    nav h2 { font-weight: 600; font-size: 1.4rem; letter-spacing: 1px; }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover { color: #00e6f6; }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+    header p {
+      font-size: 1.2rem;
+      max-width: 750px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 1100px;
+      width: 90%;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding-bottom: 3rem;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      color: #fff;
+    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+
+    .card h3 {
+      color: #38f9d7;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .card p { font-size: 1rem; line-height: 1.5; margin-bottom: 1.5rem; opacity: 0.85; }
+
+    .btn {
+      background: linear-gradient(135deg, #43e97b, #38f9d7);
+      color: white;
+      padding: 0.7rem 1.3rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .btn:hover { transform: scale(1.05); background: linear-gradient(135deg, #38f9d7, #43e97b); }
+
+    footer {
+      margin-top: auto;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      background: rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 480px) {
+      header h1 { font-size: 2rem; }
+      header p { font-size: 1rem; }
+      nav h2 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h2>Inventory Dashboard</h2>
+    <div>
+      <!-- <a href="/">Home</a> -->
+        <a href="/profile">Profile</a>
+         <a href="/settings">Settings</a>
+      <a href="/login">Logout</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Welcome, <%= userName %> 👋</h1>
+    <p>
+      Track inventory in real-time, set reorder alerts, and manage your stock seamlessly with a single dashboard.
+    </p>
+  </header>
+
+  <main>
+    <div class="card" onclick="window.location.href='/add-item'">
+      <h3>Add / Edit Inventory</h3>
+      <p>Add or update items with SKU, type, measure unit, thresholds, and quantities.</p>
+      <a href="/add-item" class="btn">Manage Inventory</a>
+    </div>
+
+    <div class="card" onclick="window.location.href='/inventory-list'">
+      <h3>Inventory Overview</h3>
+      <p>View stock levels, reserved items, and items that need reordering quickly.</p>
+      <a href="/inventory-list" class="btn">View Inventory</a>
+    </div>
+
+    <div class="card" onclick="window.location.href='/transaction-log'">
+      <h3>Transaction Log</h3>
+      <p>See complete inflow & outflow history with timestamps and details.</p>
+      <a href="/transaction-log" class="btn">View Log</a>
+    </div>
+
+    <div class="card" onclick="window.location.href='/alerts'">
+      <h3>Reorder Alerts</h3>
+      <p>Get alerts when stock levels drop below thresholds to avoid stock-outs.</p>
+      <a href="/alerts" class="btn">Check Alerts</a>
+    </div>
+
+    <div class="card" onclick="window.location.href='/low-stock'">
+      <h3>Low Stock Items</h3>
+      <p>Check all items currently below their minimum stock threshold.</p>
+      <a href="/low-stock" class="btn">View Low Stock</a>
+    </div>
+
+    <div class="card" onclick="window.location.href='/reserved-items'">
+      <h3>Reserved Items</h3>
+      <p>See which items are reserved for orders or production.</p>
+      <a href="/reserved-items" class="btn">View Reserved</a>
+    </div>
+
+    <div class="card" onclick="window.location.href='/hazardous-materials'">
+      <h3>Hazardous Materials</h3>
+      <p>Track and manage items flagged as hazardous for compliance.</p>
+      <a href="/hazardous-materials" class="btn">View Hazardous</a>
+    </div>
+
+    <div class="card" onclick="window.location.href='/items-available'">
+      <h3>Inventory List</h3>
+      <p>Manage items available for buying/selling with complete details.</p>
+      <a href="/items-available" class="btn">Buy / Sell List</a>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Inventory Control System. All rights reserved.
+  </footer>
+
+</body>
+</html>

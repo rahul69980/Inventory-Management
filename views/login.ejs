@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        @import url('http://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bg-animation 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes bg-animation {
+            0% { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+            100% {background: linear-gradient(135deg, #6a11cb, #2575fc); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 16px;
+            width: 320px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            color: white;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.8);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #38f9d7, #43e97b);
+            transform: scale(1.05);
+        }
+
+        #errorMsg {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: yellow;
+        }
+
+        .loading {
+            background: linear-gradient(135deg, #38f9d7, #43e97b);
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            width: 80%;
+            height: 2px;
+            background: white;
+            animation: loadingBar 1s infinite;
+        }
+
+        @keyframes loadingBar {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Welcome Back</h2>
+    <form id="loginForm" method="POST" action="/auth/login">
+      <input type="email" name="email" placeholder="Enter Email" required>
+      <input type="password" name="password" placeholder="Enter Password" required>
+      <button type="submit" id="loginBtn">Login</button>
+      <div id="errorMsg"><%= typeof error !== 'undefined' ? error : '' %></div>
+      <div id="successMsg" style="margin-top: 10px; text-align: center; font-weight: bold; color: #43e97b;"><%= typeof success !== 'undefined' ? success : '' %></div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById('loginForm');
+      const errorMsg = document.getElementById('errorMsg');
+      const loginBtn = document.getElementById('loginBtn');
+
+      form.addEventListener("submit", function(e) {
+        // Let the server handle validation and error display
+        loginBtn.textContent = "Logging in...";
+        loginBtn.classList.add("loading");
+      });
+    });
+  </script>

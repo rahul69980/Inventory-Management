@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <style>
+    @import url('http://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 10px; /* Added padding */
+      animation: bg-animation 8s ease-in-out infinite alternate;
+      overflow-y: auto; /* Allow scrolling if needed */
+    }
+
+    @keyframes bg-animation {
+      0% { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+      100% {  background: linear-gradient(135deg, #6a11cb, #2575fc); }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      padding: 30px 40px;
+      border-radius: 16px;
+      width: 400px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      color: white;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 26px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(255,255,255,0.8);
+    }
+
+    textarea {
+      min-height: 60px;
+    }
+
+    ul#passwordRules {
+      list-style: none;
+      padding-left: 10px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    #passwordRules li {
+      margin-bottom: 4px;
+      color: #ffeb3b;
+    }
+
+    #passwordRules li.valid {
+      color: #00e676;
+    }
+
+    .password-message {
+      font-size: 13px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #43e97b, #38f9d7);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #38f9d7, #43e97b);
+      transform: scale(1.05);
+    }
+
+    #errorMsg {
+      text-align: center;
+      color: yellow;
+      font-weight: bold;
+      display: none;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Create Your Account</h2>
+    <div id="errorMsg"></div>
+    <form id="signupForm">
+      <input type="text" name="firstName" placeholder="First Name" required>
+      <input type="text" name="middleName" placeholder="Middle Name (Optional)">
+      <input type="text" name="lastName" placeholder="Last Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="phone" placeholder="Phone (+CountryCode)" maxlength="14" required>
+      <textarea name="address" placeholder="Address" required></textarea>
+      <input type="text" name="pincode" placeholder="PIN Code" maxlength="10" required>
+      <input type="text" name="username" placeholder="Username" required>
+
+      <input type="password" name="password" id="password" placeholder="Password" required>
+      <ul id="passwordRules">
+        <li id="ruleLower">At least 1 lowercase letter</li>
+        <li id="ruleUpper">At least 1 uppercase letter</li>
+        <li id="ruleNumber">At least 1 number</li>
+        <li id="ruleSpecial">At least 1 special character</li>
+        <li id="ruleLength">Minimum 8 characters</li>
+      </ul>
+
+      <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+      <div class="password-message" id="passwordMatchMessage"></div>
+
+      <button type="submit" id="registerBtn">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById('signupForm');
+      const errorMsg = document.getElementById('errorMsg');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+      const registerBtn = document.getElementById('registerBtn');
+
+      const rules = {
+        lower: document.getElementById('ruleLower'),
+        upper: document.getElementById('ruleUpper'),
+        number: document.getElementById('ruleNumber'),
+        special: document.getElementById('ruleSpecial'),
+        length: document.getElementById('ruleLength')
+      };
+
+      function validatePasswordStrength(passwordVal) {
+        const checks = {
+          lower: /[a-z]/.test(passwordVal),
+          upper: /[A-Z]/.test(passwordVal),
+          number: /\d/.test(passwordVal),
+          special: /[!@#$%^&*]/.test(passwordVal),
+          length: passwordVal.length >= 8
+        };
+
+        for (const rule in rules) {
+          rules[rule].classList.toggle("valid", checks[rule]);
+        }
+        return Object.values(checks).every(Boolean);
+      }
+
+      password.addEventListener("input", () => {
+        validatePasswordStrength(password.value);
+      });
+
+      confirmPassword.addEventListener("input", () => {
+        const match = password.value === confirmPassword.value;
+        passwordMatchMessage.textContent = match ? "Passwords match ✅" : "Passwords do not match ❌";
+        passwordMatchMessage.style.color = match ? "#00e676" : "#ff3d00";
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        errorMsg.style.display = 'none';
+
+        if (!validatePasswordStrength(password.value)) {
+          errorMsg.textContent = "Password does not meet the requirements.";
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        if (password.value !== confirmPassword.value) {
+          errorMsg.textContent = "Passwords do not match.";
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        // Success flow
+        registerBtn.textContent = "Registering...";
+        setTimeout(() => {
+          // Redirect to login after successful signup
+          window.location.href = "/login";
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>

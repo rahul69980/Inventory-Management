@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Registration Form</title>
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f4f7f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    form {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 380px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+      font-weight: 700;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #555;
+    }
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      resize: vertical;
+    }
+    input[type='text']:focus,
+    input[type='email']:focus,
+    input[type='password']:focus,
+    textarea:focus {
+      border-color: #4a90e2;
+      outline: none;
+    }
+    textarea {
+      min-height: 70px;
+    }
+    button {
+      width: 100%;
+      padding: 12px 0;
+      margin-top: 20px;
+      background: #4a90e2;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: #357abd;
+    }
+    #passwordRules {
+      margin-top: 6px;
+      font-size: 14px;
+      list-style: none;
+      padding-left: 20px;
+      margin-bottom: 0;
+    }
+    #passwordRules li {
+      margin-bottom: 4px;
+      color: red;
+    }
+    #passwordRules li.valid {
+      color: green;
+    }
+    .password-message {
+      font-size: 14px;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+    @media (max-width: 420px) {
+      form {
+        width: 90%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<form id="registrationForm" method="POST" action="/auth/signup" novalidate="">
+<h2>Registration Form</h2>
+<label for="firstName">First Name:</label>
+<input id="firstName" name="firstName" type="text"/>
+<label for="middleName">Middle Name (Optional):</label>
+<input id="middleName" name="middleName" type="text"/>
+<label for="lastName">Last Name:</label>
+<input id="lastName" name="lastName" type="text"/>
+<label for="email">Email:</label>
+<input id="email" name="email" type="email"/>
+<label for="phone">Phone Number (+CountryCode):</label>
+<input id="phone" maxlength="14" name="phone" placeholder="+911234567890" type="text"/>
+<label for="address">Address:</label>
+<textarea id="address" name="address"></textarea>
+<label for="pincode">PIN Code:</label>
+<input id="pincode" maxlength="10" name="pincode" type="text"/>
+<label for="username">Username:</label>
+<input id="username" name="username" type="text"/>
+<label for="password">Password:</label>
+<input id="password" name="password" type="password"/>
+<ul id="passwordRules">
+<li id="ruleLower">At least 1 lowercase letter</li>
+<li id="ruleUpper">At least 1 uppercase letter</li>
+<li id="ruleNumber">At least 1 number</li>
+<li id="ruleSpecial">At least 1 special character</li>
+<li id="ruleLength">Minimum 8 characters</li>
+</ul>
+<label for="confirmPassword">Confirm Password:</label>
+<input id="confirmPassword" name="confirmPassword" type="password"/>
+<div class="password-message" id="passwordMatchMessage"></div>
+<button type="submit">Register</button>
+</form>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById('registrationForm');
+    const inputs = {
+        firstName: document.getElementById('firstName'),
+        middleName: document.getElementById('middleName'),
+        lastName: document.getElementById('lastName'),
+        email: document.getElementById('email'),
+        phone: document.getElementById('phone'),
+        address: document.getElementById('address'),
+        pincode: document.getElementById('pincode'),
+        username: document.getElementById('username'),
+        password: document.getElementById('password'),
+        confirmPassword: document.getElementById('confirmPassword')
+    };
+
+    const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+    const rules = {
+        lower: document.getElementById('ruleLower'),
+        upper: document.getElementById('ruleUpper'),
+        number: document.getElementById('ruleNumber'),
+        special: document.getElementById('ruleSpecial'),
+        length: document.getElementById('ruleLength')
+    };
+
+    function validatePasswordStrength(password) {
+        const checks = {
+            lower: /[a-z]/.test(password),
+            upper: /[A-Z]/.test(password),
+            number: /\d/.test(password),
+            special: /[!@#$%^&*]/.test(password),
+            length: password.length >= 8
+        };
+
+        for (const rule in rules) {
+            rules[rule].classList.toggle("valid", checks[rule]);
+            rules[rule].classList.toggle("invalid", !checks[rule]);
+        }
+    }
+
+    inputs.password.addEventListener("input", () => {
+        validatePasswordStrength(inputs.password.value);
+    });
+
+    inputs.confirmPassword.addEventListener("input", () => {
+        const match = inputs.password.value === inputs.confirmPassword.value;
+        passwordMatchMessage.textContent = match ? "Passwords match ✅" : "Passwords do not match ❌";
+        passwordMatchMessage.style.color = match ? "green" : "red";
+    });
+
+    form.addEventListener("submit", (e) => {
+        for (const key in inputs) {
+            // Skip middleName as it's optional
+            if (key === 'middleName') continue;
+            
+            if (inputs[key].value.trim() === "") {
+                alert(`Please fill out the ${key.replace(/([A-Z])/g, ' $1').toLowerCase()} field.`);
+                inputs[key].focus();
+                e.preventDefault();
+                return;
+            }
+        }
+
+        const rulesPassed = Object.values(rules).every(rule => rule.classList.contains("valid"));
+        const passwordsMatch = inputs.password.value === inputs.confirmPassword.value;
+
+        if (!rulesPassed) {
+            alert("Password does not meet the requirements.");
+            e.preventDefault();
+        } else if (!passwordsMatch) {
+            alert("Passwords do not match.");
+            e.preventDefault();
+        }
+    });
+});
+</script>
+</body>
+</html>

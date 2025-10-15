@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stocks Available - Inventory List</title>
+  <link href="http://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9faff;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    h1 {
+      color: #4a90e2;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 2px 8px rgba(74,144,226,0.15);
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #4a90e2;
+      color: white;
+      font-weight: 600;
+    }
+    tbody tr.low-stock {
+      background-color: #ffe5e5;
+    }
+    tbody tr:hover {
+      background-color: #eaf4fe;
+    }
+    .status-low {
+      color: #d9534f;
+      font-weight: 700;
+    }
+    .status-available {
+      color: #28a745;
+      font-weight: 700;
+    }
+    button.buy-btn {
+      background-color: #4a90e2;
+      border: none;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    button.buy-btn:hover {
+      background-color: #357ab8;
+    }
+    .actions {
+      text-align: center;
+    }
+    a {
+      color: #4a90e2;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .no-data {
+      text-align: center;
+      color: #888;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+    <%- include('partials/back-button') %>
+
+  <h1>Stocks Available</h1>
+
+  <table id="inventoryTable" aria-label="List of inventory items and stock levels">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Item Name</th>
+        <th>Type</th>
+        <th>Unit</th>
+        <th>Min Threshold</th>
+        <th>Qty On Hand</th>
+        <th>Qty Reserved</th>
+        <th>Qty Ordered</th>
+        <th>Status</th>
+        <th>Buy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Inventory rows go here -->
+    </tbody>
+  </table>
+
+  <p class="no-data" id="noDataMsg" style="display:none;">No inventory items found.</p>
+
+  <p style="margin-top: 1rem; text-align:center;">
+    <a href="/add-item">Add New Inventory Item</a> | 
+    <a href="/index">Back to Home</a>
+  </p>
+
+  <script>
+    function loadInventory() {
+      const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+      const tbody = document.querySelector('#inventoryTable tbody');
+      const noDataMsg = document.getElementById('noDataMsg');
+      tbody.innerHTML = '';
+
+      if (inventory.length === 0) {
+        noDataMsg.style.display = 'block';
+        document.getElementById('inventoryTable').style.display = 'none';
+        return;
+      } else {
+        noDataMsg.style.display = 'none';
+        document.getElementById('inventoryTable').style.display = 'table';
+      }
+
+      inventory.forEach((item, index) => {
+        const row = document.createElement('tr');
+
+        // Highlight if qtyOnHand < minThreshold
+        if (item.qtyOnHand < item.minThreshold) {
+          row.classList.add('low-stock');
+        }
+
+        // Status text and class
+        const statusText = item.qtyOnHand < item.minThreshold ? 'Low on Stock' : 'Available';
+        const statusClass = item.qtyOnHand < item.minThreshold ? 'status-low' : 'status-available';
+
+        row.innerHTML = `
+          <td>${item.sku}</td>
+          <td>${item.name}</td>
+          <td>${item.type}</td>
+          <td>${item.unit}</td>
+          <td>${item.minThreshold}</td>
+          <td>${item.qtyOnHand}</td>
+          <td>${item.qtyReserved}</td>
+          <td>${item.qtyOrdered}</td>
+          <td class="${statusClass}">${statusText}</td>
+          <td class="actions">
+            <button class="buy-btn" data-index="${index}">Buy</button>
+          </td>
+        `;
+
+        tbody.appendChild(row);
+      });
+
+      // Add event listeners for Buy buttons
+      document.querySelectorAll('.buy-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const idx = button.getAttribute('data-index');
+          purchaseItem(idx);
+        });
+      });
+    }
+
+    function purchaseItem(index) {
+      let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+      const item = inventory[index];
+
+      // Simulate buying 1 unit (you can change this logic or add input later)
+      item.qtyOnHand += 1;
+
+      // Save updated inventory
+      localStorage.setItem('inventory', JSON.stringify(inventory));
+
+      alert(`Purchased 1 ${item.unit} of "${item.name}". New Quantity On Hand: ${item.qtyOnHand}`);
+
+      // Reload table to update data and status
+      loadInventory();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadInventory);
+  </script>
+</body>
+</html>
