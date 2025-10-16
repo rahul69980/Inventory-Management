@@ -15,7 +15,7 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_subnet" "public" {
-  count                   = length(var.public_subnet_cidrs)
+  count                   = 2
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_cidrs[count.index]
   availability_zone       = var.azs[count.index]
@@ -26,7 +26,7 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private" {
-  count             = length(var.private_subnet_cidrs)
+  count             = 2
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.private_subnet_cidrs[count.index]
   availability_zone = var.azs[count.index]
@@ -35,16 +35,16 @@ resource "aws_subnet" "private" {
   }
 }
 
+resource "aws_eip" "nat" {
+  domain = "vpc"
+}
+
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public[0].id
   tags = {
-    Name = "${var.project}-nat-gateway"
+    Name = "${var.project}-nat"
   }
-}
-
-resource "aws_eip" "nat" {
-  domain = "vpc"
 }
 
 resource "aws_route_table" "public" {
@@ -61,7 +61,7 @@ resource "aws_route" "public_internet_access" {
 }
 
 resource "aws_route_table_association" "public" {
-  count          = length(aws_subnet.public)
+  count          = 2
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
@@ -80,7 +80,7 @@ resource "aws_route" "private_nat_access" {
 }
 
 resource "aws_route_table_association" "private" {
-  count          = length(aws_subnet.private)
+  count          = 2
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }

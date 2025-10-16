@@ -60,7 +60,7 @@ spec:
         - containerPort: 3000
         env:
         - name: MONGO_URI
-          value: "mongodb://mongodb-service:27017/donatebooks"
+          value: "mongodb://mongodb-service:27017/inventorydb_prod"
         - name: PORT
           value: "3000"
         - name: HOST
